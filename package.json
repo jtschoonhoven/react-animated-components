@@ -1,8 +1,8 @@
 {
-  "name": "reanimated",
+  "name": "react-animated-components",
   "private": false,
   "version": "1.0.0",
-  "description": "Easy CSS animations for React",
+  "description": "Easy CSS-in-JS-based animations for React",
   "main": "dist/index.js",
   "files": [
     "dist"

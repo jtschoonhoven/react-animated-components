@@ -63,15 +63,15 @@ const animationFactory = ({
       `
       // Handle string component declarations
       if (typeof component === 'string') {
-        return styled[component]`
-          ${animationCss}
-        `
+        // @ts-ignore
+        // prettier-ignore
+        return styled[component]`${animationCss}`
       }
       // Handle an undefined (default) component declaration
       if (typeof component === 'undefined') {
-        return styled(defaultComponent)`
-          ${animationCss}
-        `
+        // @ts-ignore
+        // prettier-ignore
+        return styled(defaultComponent)`${animationCss}`
       }
       // Handle a real component declaration
       return styled(component)`

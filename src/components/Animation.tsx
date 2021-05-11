@@ -1,6 +1,6 @@
 import React from 'react'
 import { Keyframes } from 'styled-components'
-import animationFactory, { AnimationProps as BaseAnimationProps } from '../animation-factory'
+import animationFactory, { BaseAnimationProps } from '../animation-factory'
 
 export interface AnimationComponentProps extends BaseAnimationProps {
   keyframes: Keyframes
