@@ -1,5 +1,17 @@
 # v1.0.2 (Tue May 11 2021)
 
+#### ⚠️ Pushed to `master`
+
+- Edit package.json (jtschoonhoven@gmail.com)
+
+#### Authors: 1
+
+- jtschoonhoven (jtschoonhoven@gmail.com)
+
+---
+
+# v1.0.2 (Tue May 11 2021)
+
 
 
 ---
