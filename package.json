@@ -2,7 +2,7 @@
   "name": "react-animated-components",
   "private": false,
   "version": "1.2.1",
-  "description": "Easy CSS-in-JS-based animations for React",
+  "description": "Easy CSS-based animations for React",
   "main": "dist/index.js",
   "license": "MIT",
   "repository": "https://github.com/jtschoonhoven/react-animated-components",
