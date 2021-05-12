@@ -7,7 +7,7 @@ export interface AnimationComponentProps extends BaseAnimationProps {
 }
 
 /**
- * Generic animation component that accepts custom keyframes.
+ * Generic animation component that accepts custom keyframes
  */
 const Animation: React.FC<AnimationComponentProps> = ({
   keyframes,
