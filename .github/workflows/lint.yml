@@ -1,7 +1,7 @@
 # https://storybook.js.org/tutorials/design-systems-for-developers/react/en/distribute/
 
 # Name of our action
-name: Release
+name: Lint
 
 # The event that will trigger the action
 on:
@@ -33,10 +33,5 @@ jobs:
             package-deps-${{ hashFiles('package-lock.json') }}
       - name: Install dependencies
         run: npm install --no-save
-      - name: Build
-        run: npm run build
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm run release
+      - name: Lint
+        run: npm run lint-check

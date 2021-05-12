@@ -1,7 +1,7 @@
 {
   "name": "react-animated-components",
   "private": false,
-  "version": "1.2.1",
+  "version": "1.2.4",
   "description": "Easy CSS-based animations for React",
   "main": "dist/index.js",
   "license": "MIT",
@@ -16,9 +16,10 @@
     "prettier": "npx prettier ./src --write",
     "eslint": "npx eslint ./src --fix",
     "lint": "npm run prettier && npm run eslint",
+    "lint-check": "npx prettier ./src --check && npx eslint ./src",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "npx build-storybook --output-dir ./docs",
-    "release": "npx auto shipit --base-branch=master"
+    "publish": "npm run build && npm publish"
   },
   "author": "jtschoonhoven@gmail.com",
   "devDependencies": {
@@ -31,7 +32,6 @@
     "@types/styled-components": "^5.1.9",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
-    "auto": "^10.27.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-runtime": "^6.26.0",
