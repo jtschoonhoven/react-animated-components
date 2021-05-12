@@ -4,9 +4,7 @@
 name: Release
 
 # The event that will trigger the action
-on:
-  push:
-    branches: [master]
+on: [push]
 
 # what the action will do
 jobs:
