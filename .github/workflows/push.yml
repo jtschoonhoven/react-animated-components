@@ -31,11 +31,16 @@ jobs:
           key: package-deps-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             package-deps-${{ hashFiles('package-lock.json') }}
-      - name: Create Release
+      - name: Install dependencies
+        run: npm install --no-save
+      - name: Lint
+        run: npm run lint
+      - name: Build Storybook
+        run: npm run build-storybook
+      - name: Build
+        run: npm run build
+      - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          npm install --no-save
-          npm build
-          npm release
+        run: npm run release

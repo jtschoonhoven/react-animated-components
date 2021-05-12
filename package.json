@@ -10,7 +10,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "npm run lint && rollup --config ./rollup.config.js",
+    "build": "rollup --config ./rollup.config.js",
     "start": "rollup --config ./rollup.config.js --watch",
     "prettier": "npx prettier ./src --write",
     "eslint": "npx eslint ./src --fix",
