@@ -1,5 +1,27 @@
 # v1.0.2 (Wed May 12 2021)
 
+#### 🐛 Bug Fix
+
+- Minor readme fix [#1](https://github.com/jtschoonhoven/react-animated-components/pull/1) ([@jtschoonhoven](https://github.com/jtschoonhoven))
+
+#### ⚠️ Pushed to `master`
+
+- Bump ([@jtschoonhoven](https://github.com/jtschoonhoven))
+- Update readme ([@jtschoonhoven](https://github.com/jtschoonhoven))
+- Remove /dist directory from git ([@jtschoonhoven](https://github.com/jtschoonhoven))
+- Update push.yml ([@jtschoonhoven](https://github.com/jtschoonhoven))
+- Fix push.yml ([@jtschoonhoven](https://github.com/jtschoonhoven))
+- README ([@jtschoonhoven](https://github.com/jtschoonhoven))
+- Edit package.json ([@jtschoonhoven](https://github.com/jtschoonhoven))
+
+#### Authors: 1
+
+- Jonathan Schoonhoven ([@jtschoonhoven](https://github.com/jtschoonhoven))
+
+---
+
+# v1.0.2 (Wed May 12 2021)
+
 #### ⚠️ Pushed to `master`
 
 - Update readme (jtschoonhoven@gmail.com)
