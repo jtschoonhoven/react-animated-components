@@ -6,6 +6,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "repository": "https://github.com/jtschoonhoven/react-animated-components",
+  "homepage": "https://jtschoonhoven.github.io/react-animated-components",
   "files": [
     "dist"
   ],
