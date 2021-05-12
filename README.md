@@ -38,19 +38,19 @@ const RotatingPie = () => {
 
 Animated components all accept the following optional properties.
 
-##### durationMs [number]
+#### durationMs [number]
 
 The total duration (in milliseconds) of one cycle of the animation.
 
-##### timingFunc [string]
+#### timingFunc [string]
 
 Defines how animations progress through each cycle. Accepts any valid value of the [`animation-timing-function`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function) CSS property.
 
-##### iterations [number | "infinite"]
+#### iterations [number | "infinite"]
 
 The number of times to loop the animation.
 
-##### component
+#### component
 
 The component to apply the animations to. This can be any valid tag name ("div", "span") or an actual React component type. By default, animations are applied to a `<span style="display: inline-block;">`.
 
