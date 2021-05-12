@@ -33,10 +33,6 @@ jobs:
             package-deps-${{ hashFiles('package-lock.json') }}
       - name: Install dependencies
         run: npm install --no-save
-      - name: Lint
-        run: npm run lint
-      - name: Build Storybook
-        run: npm run build-storybook
       - name: Build
         run: npm run build
       - name: Release
