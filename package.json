@@ -10,7 +10,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "npm run lint && rollup --config ./rollup.config.js",
+    "build": "npm run lint && npx rollup --config ./rollup.config.js",
     "start": "rollup --config ./rollup.config.js --watch",
     "prettier": "npx prettier ./src --write",
     "eslint": "npx eslint ./src --fix",
@@ -30,6 +30,7 @@
     "@types/styled-components": "^5.1.9",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
+    "auto": "^10.27.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-runtime": "^6.26.0",
