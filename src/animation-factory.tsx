@@ -1,6 +1,6 @@
 import React from 'react'
-import styled, { css, Keyframes } from 'styled-components'
 import { Property } from 'csstype'
+import styled, { css, Keyframes } from 'styled-components'
 import config from './globals'
 
 /**
@@ -12,21 +12,23 @@ export type ComponentType = keyof JSX.IntrinsicElements | React.FC | React.Compo
  * Common properties for all animation components.
  */
 export interface BaseAnimationProps extends Record<string, any> {
-  component?: ComponentType
   durationMs?: number
   timingFunc?: Property.AnimationTimingFunction
   iterations?: Property.AnimationIterationCount
+  onComplete?: () => void
+  exitOnComplete?: boolean
 }
 
 /**
  * Arguments to animationFactory function.
  */
 export interface AnimationFactoryProps {
-  keyframes: Keyframes
-  defaultComponent?: ComponentType
+  keyframes: Keyframes | string
+  component?: ComponentType
   defaultDurationMs?: number
   defaultTimingFunc?: Property.AnimationTimingFunction
   defaultIterations?: Property.AnimationIterationCount
+  defaultExitOnComplete?: boolean
 }
 
 /**
@@ -34,50 +36,51 @@ export interface AnimationFactoryProps {
  */
 const animationFactory = ({
   keyframes,
-  defaultComponent,
+  component,
   defaultDurationMs,
   defaultTimingFunc,
   defaultIterations,
+  defaultExitOnComplete,
 }: AnimationFactoryProps): React.FC<BaseAnimationProps> => {
-  defaultComponent = defaultComponent || config.components.default
+  component = component || config.components.default
   defaultDurationMs = defaultDurationMs || config.durationMs.slow
   defaultTimingFunc = defaultTimingFunc || config.timingFunc.linear
   defaultIterations = defaultIterations || config.iterations.once
 
+  const componentCss = css`
+    animation-name: ${keyframes};
+    animation-duration: ${(props: BaseAnimationProps) => props.durationMs || defaultDurationMs}ms;
+    animation-timing-function: ${(props: BaseAnimationProps) => props.timingFunc || defaultTimingFunc};
+    animation-iteration-count ${(props: BaseAnimationProps) => props.iterations || defaultIterations};
+  `
+  const styledComponent = typeof component === 'string' ? styled[component] : styled(component)
+  const Component = styledComponent`${componentCss}`
+
   // Configure a function component
-  const Animation: React.FC<BaseAnimationProps> = ({
-    component,
-    durationMs,
-    timingFunc,
-    iterations,
-    children,
-    ...props
-  }) => {
-    // Memoize styled components to avoid regenerating on each render
-    const Component = React.useMemo(() => {
-      const animationCss = css`
-        animation-name: ${keyframes};
-        animation-duration: ${durationMs || defaultDurationMs}ms;
-        animation-timing-function: ${timingFunc || defaultTimingFunc};
-        animation-iteration-count ${iterations || defaultIterations};
-      `
-      // Handle string component declarations
-      if (typeof component === 'string') {
-        // @ts-ignore
-        // prettier-ignore
-        return styled[component]`${animationCss}`
+  const Animation: React.FC<BaseAnimationProps> = ({ onComplete, exitOnComplete, children, ...props }) => {
+    const [isComplete, setIsComplete] = React.useState(false)
+    const durationMs = props.durationMs || defaultDurationMs
+    const iterations = props.iterations || defaultIterations
+    exitOnComplete = exitOnComplete !== undefined ? !!exitOnComplete : !!defaultExitOnComplete
+
+    // Detect when animation is complete then set isComplete and call onComplete
+    React.useEffect(() => {
+      let timeoutId: NodeJS.Timeout | undefined
+      if (typeof iterations === 'number' && typeof durationMs === 'number') {
+        timeoutId = setTimeout(() => {
+          setIsComplete(true)
+          onComplete && onComplete()
+          // @ts-ignore
+        }, durationMs * iterations)
       }
-      // Handle an undefined (default) component declaration
-      if (typeof component === 'undefined') {
-        // @ts-ignore
-        // prettier-ignore
-        return styled(defaultComponent)`${animationCss}`
+      return () => {
+        timeoutId && clearTimeout(timeoutId)
       }
-      // Handle a real component declaration
-      return styled(component)`
-        ${animationCss}
-      `
-    }, [component, keyframes, durationMs, timingFunc, iterations])
+    }, [durationMs, iterations])
+
+    if (exitOnComplete && isComplete) {
+      return <></>
+    }
     return <Component {...props}>{children}</Component>
   }
   return Animation

@@ -49,10 +49,3 @@ Defines how animations progress through each cycle. Accepts any valid value of t
 #### iterations [number | "infinite"]
 
 The number of times to loop the animation.
-
-#### component
-
-The component to apply the animations to. This can be any valid tag name ("div", "span") or an actual React component type. By default, animations are applied to a `<span style="display: inline-block;">`.
-
-> **NOTE:** Animations cannot be applied directly to components with `display: inline`, which is the default for tags like `<a>` and `<span>`. If you want to animate these directly, set `display: inline-block` and everything will be groovy.
-> In addition, custom components must pass through the `classNames` property.

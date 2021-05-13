@@ -1,37 +1,20 @@
 import React from 'react'
 import { Keyframes } from 'styled-components'
-import animationFactory, { BaseAnimationProps } from '../animation-factory'
+import animationFactory, { BaseAnimationProps, ComponentType } from '../animation-factory'
 
 export interface AnimationComponentProps extends BaseAnimationProps {
   keyframes: Keyframes
+  component: ComponentType
 }
 
 /**
- * Generic animation component that accepts custom keyframes
+ * Generic animation component that wraps the animation factory for full customization.
  */
-const Animation: React.FC<AnimationComponentProps> = ({
-  keyframes,
-  component,
-  durationMs,
-  timingFunc,
-  iterations,
-  children,
-  ...props
-}) => {
+const Animation: React.FC<AnimationComponentProps> = ({ keyframes, component, children, ...props }) => {
   const AnimatedComponent = React.useMemo(() => {
-    return animationFactory({ keyframes })
+    return animationFactory({ keyframes, component })
   }, [keyframes])
-  return (
-    <AnimatedComponent
-      component={component}
-      durationMs={durationMs}
-      timingFunc={timingFunc}
-      iterations={iterations}
-      {...props}
-    >
-      {children}
-    </AnimatedComponent>
-  )
+  return <AnimatedComponent {...props}>{children}</AnimatedComponent>
 }
 
 export default Animation

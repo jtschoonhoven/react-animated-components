@@ -5,21 +5,13 @@ import FadeIn from './components/FadeIn'
 import FadeOut from './components/FadeOut'
 import Rotate from './components/Rotate'
 
-const Template: Story = ({ Component }) => (
-  <>
-    <Component>💅</Component>
-    <Component component="span" style={{ display: 'inline-block' }}>
-      💅
-    </Component>
-    <Component
-      component={({ className }) => (
-        <span className={className} style={{ display: 'inline-block' }}>
-          💅
-        </span>
-      )}
-    />
-  </>
-)
+const Template: Story = ({ Component, ...args }) => {
+  return (
+    <>
+      <Component {...args}>💅</Component>
+    </>
+  )
+}
 
 export const _FadeIn = Template.bind({})
 _FadeIn.args = { Component: FadeIn }
@@ -35,6 +27,15 @@ export default {
   title: 'Animations',
   component: Animation,
   argTypes: {
+    durationMs: {
+      type: 'number',
+    },
+    timingFunc: {
+      type: 'text',
+    },
+    iterations: {
+      type: 'text',
+    },
     Component: {
       table: {
         disable: true,
@@ -46,16 +47,14 @@ export default {
       },
     },
     component: {
-      type: 'text',
+      table: {
+        disable: true,
+      },
     },
-    durationms: {
-      type: 'number',
-    },
-    timingFunc: {
-      type: 'text',
-    },
-    iterations: {
-      type: 'text',
+    onComplete: {
+      table: {
+        disable: true,
+      },
     },
   },
 } as Meta
