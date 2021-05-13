@@ -66,7 +66,7 @@ const animationFactory = ({
     // Detect when animation is complete then set isComplete and call onComplete
     React.useEffect(() => {
       let timeoutId: NodeJS.Timeout | undefined
-      if (iterations && !isNaN(iterations)) {
+      if (typeof iterations === 'number') {
         timeoutId = setTimeout(() => {
           setIsComplete(true)
           onComplete && onComplete()
