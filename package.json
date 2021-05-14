@@ -2,7 +2,7 @@
   "name": "react-animated-components",
   "private": false,
   "version": "2.0.1",
-  "description": "Easy CSS-based animations for React",
+  "description": "Easy-as-pie CSS animations for React",
   "main": "dist/index.js",
   "license": "MIT",
   "repository": "https://github.com/jtschoonhoven/react-animated-components",
@@ -15,8 +15,9 @@
     "start": "rollup --config ./rollup.config.js --watch",
     "prettier": "npx prettier ./src --write",
     "eslint": "npx eslint ./src --fix",
-    "lint": "npm run prettier && npm run eslint",
-    "lint-check": "npx prettier ./src --check && npx eslint ./src",
+    "typecheck": "npx tsc --noEmit --skipLibCheck",
+    "lint": "npm run prettier && npm run eslint && npm run typecheck",
+    "lint-check": "npx prettier ./src --check && npx eslint ./src && npm run typecheck",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "npx build-storybook --output-dir ./docs",
     "release": "npm run build && npm publish"
@@ -50,6 +51,6 @@
     "react-dom": "^17.0.2"
   },
   "dependencies": {
-    "styled-components": "^5.3.0"
+    "styled-components": "^5.0.0"
   }
 }

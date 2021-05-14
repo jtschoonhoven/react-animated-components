@@ -17,7 +17,7 @@ const config = {
     infinite: 'infinite',
   },
   components: {
-    default: styled.span`
+    default: styled.div`
       display: inline-block;
     `,
   },

@@ -22,7 +22,9 @@ import SlideOutRight from './components/exits/SlideOutRight'
 const Template: Story = ({ Component, ...args }) => {
   return (
     <>
-      <Component {...args}>💅</Component>
+      <Component {...args}>
+        <h1>💅</h1>
+      </Component>
     </>
   )
 }
@@ -50,15 +52,20 @@ _SlideInRight.args = { Component: SlideInRight }
 // Exits
 export const _FadeOut = Template.bind({})
 _FadeOut.args = { Component: FadeOut }
+
 export const _SlideOutDown = Template.bind({})
 _SlideOutDown.args = { Component: SlideOutDown }
+
 export const _SlideOutUp = Template.bind({})
 _SlideOutUp.args = { Component: SlideOutUp }
+
 export const _SlideOutLeft = Template.bind({})
 _SlideOutLeft.args = { Component: SlideOutLeft }
+
 export const _SlideOutRight = Template.bind({})
 _SlideOutRight.args = { Component: SlideOutRight }
 
+// https://storybook.js.org/docs/react/essentials/controls
 export default {
   title: 'Animations',
   component: Animation,
@@ -71,6 +78,20 @@ export default {
     },
     iterations: {
       type: 'text',
+    },
+    exitOnComplete: {
+      type: 'boolean',
+    },
+    active: {
+      type: 'boolean',
+      defaultValue: true,
+    },
+    display: {
+      type: 'text',
+      options: ['inline-block', 'block'],
+    },
+    style: {
+      type: 'object',
     },
     Component: {
       table: {

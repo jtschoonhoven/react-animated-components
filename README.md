@@ -62,6 +62,10 @@ const RotatingPie = () => {
 
 Animated components all accept the following **optional** properties.
 
+#### active [boolean]
+
+Controls when the animation begins. _Except for exit animations_, this defaults to true and animations begin automatically on mount. Exit animations do not run until `active` is set explicitly.
+
 #### durationMs [number]
 
 The total duration (in milliseconds) of one iteration of the animation.
@@ -77,3 +81,7 @@ The number of times to loop the animation, or "infinite".
 #### onComplete [() => void]
 
 Callback function, called when animation is complete. Useful for garbage collecting components that have exited, or for composing complex chains of effects.
+
+#### display ["inline-block" | "block"]
+
+A shorthand to set the CSS "display" property. **Do not use "inline"** this cannot be animated. Any valid CSS display property is valid, but in practice you should use either "inline-block" (the default) or "block".

@@ -8,6 +8,7 @@ const Animation = animationFactory({
   defaultTimingFunc: config.timingFunc.easeIn,
   defaultIterations: config.iterations.once,
   defaultExitOnComplete: true,
+  defaultActive: false,
 })
 
 export default Animation
