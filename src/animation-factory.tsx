@@ -22,6 +22,7 @@ export interface BaseAnimationProps extends Record<string, any> {
   display?: Property.Display
   style?: React.CSSProperties
   delayMs?: number
+  fillMode?: Property.AnimationFillMode
 }
 
 /**
@@ -35,6 +36,8 @@ export interface AnimationFactoryProps {
   defaultIterations?: Property.AnimationIterationCount
   defaultExitOnComplete?: boolean
   defaultActive?: boolean
+  defaultDelayMs?: number
+  defaultFillMode?: Property.AnimationFillMode
 }
 
 /**
@@ -48,39 +51,48 @@ const animationFactory = ({
   defaultIterations,
   defaultExitOnComplete,
   defaultActive,
+  defaultDelayMs,
+  defaultFillMode,
 }: AnimationFactoryProps): React.FC<BaseAnimationProps> => {
   component = component || config.components.default
   defaultActive = defaultActive !== undefined ? !!defaultActive : true
   defaultDurationMs = defaultDurationMs || config.durationMs.slow
   defaultTimingFunc = defaultTimingFunc || config.timingFunc.linear
   defaultIterations = defaultIterations || config.iterations.once
+  defaultFillMode = defaultFillMode || config.fillModes.default
+  defaultDelayMs = defaultDelayMs || 0
 
   const componentCss = css`
     animation-name: ${keyframes};
     animation-duration: ${(props: BaseAnimationProps) => props.durationMs || defaultDurationMs}ms;
     animation-timing-function: ${(props: BaseAnimationProps) => props.timingFunc || defaultTimingFunc};
-    animation-iteration-count ${(props: BaseAnimationProps) => props.iterations || defaultIterations};
+    animation-iteration-count: ${(props: BaseAnimationProps) => props.iterations || defaultIterations};
+    animation-fill-mode: ${(props: BaseAnimationProps) => props.fillMode || defaultFillMode};
+    animation-delay: ${(props: BaseAnimationProps) => props.delayMs || defaultDelayMs}ms;
   `
+
   const styledComponent = typeof component === 'string' ? styled[component] : styled(component)
   const Component = styledComponent`${componentCss}`
 
   // Configure a function component
   const Animation: React.FC<BaseAnimationProps> = React.forwardRef(
-    ({ active, style, display, delayMs, onActive, onComplete, exitOnComplete, children, ...props }, ref) => {
+    ({ active, style, display, onActive, onComplete, exitOnComplete, children, ...props }, ref) => {
       exitOnComplete = exitOnComplete !== undefined ? !!exitOnComplete : !!defaultExitOnComplete
       style = style !== undefined ? { display, ...style } : { display }
 
-      const isActiveInitialState = active !== undefined ? !!active : !!defaultActive || delayMs === 0
+      const isActiveInitialState = active !== undefined ? !!active : !!defaultActive || props.delayMs === 0
       const durationMs = props.durationMs || defaultDurationMs
       const iterations = props.iterations || defaultIterations
       const [isActive, setIsActive] = React.useState(isActiveInitialState)
       const [isComplete, setIsComplete] = React.useState(false)
+      const [forceRemount, setForceRemount] = React.useState(false)
 
       // Add a "reset" method to the forwarded ref
       React.useImperativeHandle(ref, () => ({
         reset() {
           setIsComplete(false)
           setIsActive(false)
+          setForceRemount(true)
         },
       }))
 
@@ -93,6 +105,11 @@ const animationFactory = ({
       React.useEffect(() => {
         isActive && onActive && onActive()
       }, [isActive])
+
+      // Reset forceRemount to false if triggered
+      React.useEffect(() => {
+        forceRemount && setForceRemount(false)
+      }, [forceRemount])
 
       // Detect when animation is complete then set isComplete and call onComplete
       React.useEffect(() => {
@@ -110,31 +127,31 @@ const animationFactory = ({
         return () => {
           timeoutId && clearTimeout(timeoutId)
         }
-      }, [durationMs, iterations, active])
+      }, [durationMs, iterations, isActive])
 
       // Detect when a delayed animation becomes active and set isActive
       React.useEffect(() => {
         let timeoutId: NodeJS.Timeout | undefined
-        if (!isActive && typeof delayMs === 'number') {
+        if (!isActive && typeof props.delayMs === 'number') {
           timeoutId = setTimeout(() => {
             setIsActive(true)
-          }, delayMs)
+          }, props.delayMs)
         }
         // Teardown
         return () => {
           timeoutId && clearTimeout(timeoutId)
         }
-      }, [isActive, delayMs])
+      }, [isActive, props.delayMs])
 
-      // If animation is not yet active, render only child components
-      if (!isActive && !isComplete) {
+      // Force the Component to rerender if forceRemount is true
+      if (forceRemount) {
         return <>{children}</>
       }
-      // Else if animation exits on complete, remove from DOM if complete
+      // If animation exits on complete, remove from DOM on finish
       if (isComplete && exitOnComplete) {
         return <></>
       }
-      // Else render animated component
+      // Else render the animated component
       return (
         <Component {...props} style={style}>
           {children}

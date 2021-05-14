@@ -7,6 +7,7 @@ const Animation = animationFactory({
   defaultDurationMs: config.durationMs.medium,
   defaultTimingFunc: config.timingFunc.linear,
   defaultIterations: config.iterations.once,
+  defaultFillMode: config.fillModes.exitAnimationDefault,
   defaultExitOnComplete: true,
   defaultActive: false,
 })

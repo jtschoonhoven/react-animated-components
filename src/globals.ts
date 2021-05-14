@@ -12,6 +12,10 @@ const config = {
     easeOut: 'ease-out',
     easeInOut: 'ease-in-out',
   },
+  fillModes: {
+    default: 'none',
+    exitAnimationDefault: 'forwards',
+  },
   iterations: {
     once: 1,
     infinite: 'infinite',

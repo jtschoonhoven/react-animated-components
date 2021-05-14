@@ -22,8 +22,8 @@ const Template: Story = ({ ...args }) => {
   )
 }
 
-export const _Fade = Template.bind({})
-_Fade.args = {}
+export const _Rotate = Template.bind({})
+_Rotate.args = {}
 
 // https://storybook.js.org/docs/react/essentials/controls
 export default {
