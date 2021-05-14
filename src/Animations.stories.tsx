@@ -93,6 +93,10 @@ export default {
     style: {
       type: 'object',
     },
+    delayMs: {
+      type: 'number',
+      defaultValue: 1000,
+    },
     Component: {
       table: {
         disable: true,

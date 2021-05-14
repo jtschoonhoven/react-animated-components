@@ -16,10 +16,12 @@ export interface BaseAnimationProps extends Record<string, any> {
   timingFunc?: Property.AnimationTimingFunction
   iterations?: Property.AnimationIterationCount
   onComplete?: () => void
+  onActive?: () => void
   exitOnComplete?: boolean
   active?: boolean
   display?: Property.Display
   style?: React.CSSProperties
+  delayMs?: number
 }
 
 /**
@@ -64,27 +66,40 @@ const animationFactory = ({
 
   // Configure a function component
   const Animation: React.FC<BaseAnimationProps> = ({
-    onComplete,
-    exitOnComplete,
     active,
     style,
     display,
+    delayMs,
+    onActive,
+    onComplete,
+    exitOnComplete,
     children,
     ...props
   }) => {
     exitOnComplete = exitOnComplete !== undefined ? !!exitOnComplete : !!defaultExitOnComplete
-    active = active !== undefined ? !!active : !!defaultActive
+    // active = active !== undefined ? !!active : !!defaultActive
     style = style !== undefined ? { display, ...style } : { display }
 
-    const [isComplete, setIsComplete] = React.useState(false)
+    const isActiveInitialState = active !== undefined ? !!active : !!defaultActive || delayMs === 0
     const durationMs = props.durationMs || defaultDurationMs
     const iterations = props.iterations || defaultIterations
+    const [isActive, setIsActive] = React.useState(isActiveInitialState)
+    const [isComplete, setIsComplete] = React.useState(false)
+
+    // Detect if active prop changes from false to true and update state
+    React.useEffect(() => {
+      !isActive && active && setIsActive(true)
+    }, [active])
+
+    // Call onActive function when animation first becomes active
+    React.useEffect(() => {
+      isActive && onActive && onActive()
+    }, [isActive])
 
     // Detect when animation is complete then set isComplete and call onComplete
     React.useEffect(() => {
       let timeoutId: NodeJS.Timeout | undefined
-
-      if (active) {
+      if (isActive) {
         if (typeof iterations === 'number' && typeof durationMs === 'number') {
           timeoutId = setTimeout(() => {
             setIsComplete(true)
@@ -99,8 +114,22 @@ const animationFactory = ({
       }
     }, [durationMs, iterations, active])
 
+    // Detect when a delayed animation becomes active and set isActive
+    React.useEffect(() => {
+      let timeoutId: NodeJS.Timeout | undefined
+      if (!isActive && typeof delayMs === 'number') {
+        timeoutId = setTimeout(() => {
+          setIsActive(true)
+        }, delayMs)
+      }
+      // Teardown
+      return () => {
+        timeoutId && clearTimeout(timeoutId)
+      }
+    }, [isActive, delayMs])
+
     // If animation is not yet active, render only child components
-    if (!active && !isComplete) {
+    if (!isActive && !isComplete) {
       return <>{children}</>
     }
     // Else if animation exits on complete, remove from DOM if complete
