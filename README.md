@@ -44,7 +44,7 @@ const RotatingPie = () => {
 
 - `ccw` [boolean]: If true, rotates counter-clockwise (default false)
 
-##### Sub-components
+**Sub-components:**
 
 - `<RotateCw>`
 - `<RotateCcw>`
@@ -55,7 +55,7 @@ const RotatingPie = () => {
 
 - `out` [boolean]: If true, fades out and exits the DOM (default false)
 
-##### Sub-components
+**Sub-components:**
 
 - `<FadeIn>`
 - `<FadeOut>`
@@ -70,7 +70,7 @@ const RotatingPie = () => {
 - `right` [boolean]: Slide right
 - `out` [boolean]: If true, slides out and exits the DOM (default false)
 
-##### Sub-components
+**Sub-components:**
 
 - `<SlideInDown>`
 - `<SlideInUp>`
@@ -85,49 +85,49 @@ const RotatingPie = () => {
 
 Animated components all accept the following **optional** properties.
 
-#### active
+### active
 
 **[boolean]**
 
 Controls when the animation begins. _Except for exit animations_, this defaults to true and animations begin automatically on mount. Exit animations do not run until `active` is set explicitly.
 
-#### delayMs
+### delayMs
 
 **[number]**
 
 Delays the animation start by the given number of milliseconds.
 
-#### durationMs
+### durationMs
 
 **[number]**
 
 The total duration (in milliseconds) of one iteration of the animation.
 
-#### timingFunc
+### timingFunc
 
 **[string]**
 
 Defines how animations progress through each cycle. Accepts any valid value of the [`animation-timing-function`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function) CSS property.
 
-#### iterations
+### iterations
 
 **[number | "infinite"]**
 
 The number of times to loop the animation, or "infinite".
 
-#### onComplete
+### onComplete
 
 **[() => void]**
 
 Callback function, called when animation is complete. Useful for garbage collecting components that have exited, or for composing complex chains of effects.
 
-#### onActive
+### onActive
 
 **[() => void]**
 
 Callback function, called when animation begins. Useful for chaining delayed animations.
 
-#### display
+### display
 
 **["inline-block" | "block"]**
 
