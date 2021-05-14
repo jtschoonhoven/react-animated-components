@@ -9,6 +9,7 @@ const config = {
   timingFunc: {
     linear: 'linear',
     easeIn: 'ease-in',
+    easeOut: 'ease-out',
     easeInOut: 'ease-in-out',
   },
   iterations: {

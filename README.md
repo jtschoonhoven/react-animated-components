@@ -1,10 +1,12 @@
-# react-animated-components
+# 🥧 react-animated-components 🥧
 
-##### Easy CSS animations for React.
+##### Easy-as-pie CSS animations for React.
 
 _Because animations should be as easy as `<Rotate>🥧</Rotate>`_
 
-[jtschoonhoven.github.io/react-animated-components](https://jtschoonhoven.github.io/react-animated-components)
+[Live Demo with Storybook](https://jtschoonhoven.github.io/react-animated-components)
+
+Built with Typescript. Just one dependency (`styled-components` 💅).
 
 ## Install
 
@@ -34,13 +36,35 @@ const RotatingPie = () => {
 
 [jtschoonhoven.github.io/react-animated-components](https://jtschoonhoven.github.io/react-animated-components)
 
+## Components
+
+### Loops
+
+- `<Rotate>`
+
+### Entrances
+
+- `<FadeIn>`
+- `<SlideInDown>`
+- `<SlideInUp>`
+- `<SlideInLeft>`
+- `<SlideInRight>`
+
+# Exits
+
+- `<FadeOut>`
+- `<SlideOutDown>`
+- `<SlideOutUp>`
+- `<SlideOutLeft>`
+- `<SlideOutRight>`
+
 ## Component API
 
-Animated components all accept the following optional properties.
+Animated components all accept the following **optional** properties.
 
 #### durationMs [number]
 
-The total duration (in milliseconds) of one cycle of the animation.
+The total duration (in milliseconds) of one iteration of the animation.
 
 #### timingFunc [string]
 
@@ -48,4 +72,8 @@ Defines how animations progress through each cycle. Accepts any valid value of t
 
 #### iterations [number | "infinite"]
 
-The number of times to loop the animation.
+The number of times to loop the animation, or "infinite".
+
+#### onComplete [() => void]
+
+Callback function, called when animation is complete. Useful for garbage collecting components that have exited, or for composing complex chains of effects.

@@ -23,7 +23,7 @@ export interface BaseAnimationProps extends Record<string, any> {
  * Arguments to animationFactory function.
  */
 export interface AnimationFactoryProps {
-  keyframes: Keyframes | string
+  keyframes: Keyframes
   component?: ComponentType
   defaultDurationMs?: number
   defaultTimingFunc?: Property.AnimationTimingFunction
