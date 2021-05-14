@@ -20,9 +20,19 @@ import SlideOutLeft from './components/exits/SlideOutLeft'
 import SlideOutRight from './components/exits/SlideOutRight'
 
 const Template: Story = ({ Component, ...args }) => {
+  const ref = React.useRef(null)
   return (
     <>
-      <Component {...args}>
+      <div>
+        <button
+          onClick={() => {
+            ref.current && ref.current.reset()
+          }}
+        >
+          Reset
+        </button>
+      </div>
+      <Component {...args} ref={ref}>
         <h1>💅</h1>
       </Component>
     </>
@@ -95,7 +105,7 @@ export default {
     },
     delayMs: {
       type: 'number',
-      defaultValue: 1000,
+      defaultValue: 250,
     },
     Component: {
       table: {
