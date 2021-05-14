@@ -10,9 +10,14 @@ export const fadeOut = keyframes`
   to { opacity: 0; }
 `
 
-export const rotate = keyframes`
+export const rotateCw = keyframes`
   from { transform: rotate(0deg); }
   to { transform: rotate(359deg); }
+`
+
+export const rotateCcw = keyframes`
+  from { transform: rotate(359deg); }
+  to { transform: rotate(0deg); }
 `
 
 export const slideInDown = keyframes`

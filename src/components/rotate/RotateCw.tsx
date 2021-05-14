@@ -1,9 +1,9 @@
 import animationFactory from '../../animation-factory'
 import config from '../../globals'
-import { rotate } from '../../keyframes'
+import { rotateCw } from '../../keyframes'
 
 const Animation = animationFactory({
-  keyframes: rotate,
+  keyframes: rotateCw,
   defaultDurationMs: config.durationMs.slow,
   defaultTimingFunc: config.timingFunc.linear,
   defaultIterations: config.iterations.infinite,

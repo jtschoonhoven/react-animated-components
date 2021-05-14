@@ -3,19 +3,22 @@ export { default as globals } from './globals'
 export { default as animationFactory, AnimationFactoryProps, BaseAnimationProps } from './animation-factory'
 export { default as Animation, AnimationComponentProps } from './components/Animation'
 
-// Loops
-export { default as Rotate } from './components/loops/Rotate'
+// Fades
+export { default as Fade } from './components/fade/Fade'
+export { default as FadeIn } from './components/fade/FadeIn'
+export { default as FadeOut } from './components/fade/FadeOut'
 
-// Entrances
-export { default as FadeIn } from './components/entrances/FadeIn'
-export { default as SlideInDown } from './components/entrances/SlideInDown'
-export { default as SlideInUp } from './components/entrances/SlideInUp'
-export { default as SlideInLeft } from './components/entrances/SlideInLeft'
-export { default as SlideInRight } from './components/entrances/SlideInRight'
+// Rotations
+export { default as Rotate } from './components/rotate/Rotate'
+export { default as RotateCw } from './components/rotate/RotateCw'
+export { default as RotateCcw } from './components/rotate/RotateCcw'
 
-// Exits
-export { default as FadeOut } from './components/exits/FadeOut'
-export { default as SlideOutDown } from './components/exits/SlideOutDown'
-export { default as SlideOutUp } from './components/exits/SlideOutUp'
-export { default as SlideOutLeft } from './components/exits/SlideOutLeft'
-export { default as SlideOutRight } from './components/exits/SlideOutRight'
+// Slides
+export { default as SlideInDown } from './components/slide/SlideInDown'
+export { default as SlideInUp } from './components/slide/SlideInUp'
+export { default as SlideInLeft } from './components/slide/SlideInLeft'
+export { default as SlideInRight } from './components/slide/SlideInRight'
+export { default as SlideOutDown } from './components/slide/SlideOutDown'
+export { default as SlideOutUp } from './components/slide/SlideOutUp'
+export { default as SlideOutLeft } from './components/slide/SlideOutLeft'
+export { default as SlideOutRight } from './components/slide/SlideOutRight'

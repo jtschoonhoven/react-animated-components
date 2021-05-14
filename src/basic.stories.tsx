@@ -2,22 +2,23 @@ import React from 'react'
 import { Story, Meta } from '@storybook/react'
 import Animation from './components/Animation'
 
-// Loops
-import Rotate from './components/loops/Rotate'
+// Fades
+import FadeIn from './components/fade/FadeIn'
+import FadeOut from './components/fade/FadeOut'
 
-// Entrances
-import FadeIn from './components/entrances/FadeIn'
-import SlideInDown from './components/entrances/SlideInDown'
-import SlideInUp from './components/entrances/SlideInUp'
-import SlideInLeft from './components/entrances/SlideInLeft'
-import SlideInRight from './components/entrances/SlideInRight'
+// Rotations
+import RotateCw from './components/rotate/RotateCw'
+import RotateCcw from './components/rotate/RotateCcw'
 
-// Exits
-import FadeOut from './components/exits/FadeOut'
-import SlideOutDown from './components/exits/SlideOutDown'
-import SlideOutUp from './components/exits/SlideOutUp'
-import SlideOutLeft from './components/exits/SlideOutLeft'
-import SlideOutRight from './components/exits/SlideOutRight'
+// Slides
+import SlideInDown from './components/slide/SlideInDown'
+import SlideInUp from './components/slide/SlideInUp'
+import SlideInLeft from './components/slide/SlideInLeft'
+import SlideInRight from './components/slide/SlideInRight'
+import SlideOutDown from './components/slide/SlideOutDown'
+import SlideOutUp from './components/slide/SlideOutUp'
+import SlideOutLeft from './components/slide/SlideOutLeft'
+import SlideOutRight from './components/slide/SlideOutRight'
 
 const Template: Story = ({ Component, ...args }) => {
   const ref = React.useRef(null)
@@ -39,13 +40,32 @@ const Template: Story = ({ Component, ...args }) => {
   )
 }
 
-// Loops
-export const _Rotate = Template.bind({})
-_Rotate.args = { Component: Rotate }
+// Rotations
+export const _RotateCw = Template.bind({})
+_RotateCw.args = { Component: RotateCw }
 
-// Entrances
+export const _RotateCcw = Template.bind({})
+_RotateCcw.args = { Component: RotateCcw }
+
+// Fades
 export const _FadeIn = Template.bind({})
 _FadeIn.args = { Component: FadeIn }
+
+export const _FadeOut = Template.bind({})
+_FadeOut.args = { Component: FadeOut }
+
+// Slide
+export const _SlideOutDown = Template.bind({})
+_SlideOutDown.args = { Component: SlideOutDown }
+
+export const _SlideOutUp = Template.bind({})
+_SlideOutUp.args = { Component: SlideOutUp }
+
+export const _SlideOutLeft = Template.bind({})
+_SlideOutLeft.args = { Component: SlideOutLeft }
+
+export const _SlideOutRight = Template.bind({})
+_SlideOutRight.args = { Component: SlideOutRight }
 
 export const _SlideInDown = Template.bind({})
 _SlideInDown.args = { Component: SlideInDown }
@@ -59,25 +79,9 @@ _SlideInLeft.args = { Component: SlideInLeft }
 export const _SlideInRight = Template.bind({})
 _SlideInRight.args = { Component: SlideInRight }
 
-// Exits
-export const _FadeOut = Template.bind({})
-_FadeOut.args = { Component: FadeOut }
-
-export const _SlideOutDown = Template.bind({})
-_SlideOutDown.args = { Component: SlideOutDown }
-
-export const _SlideOutUp = Template.bind({})
-_SlideOutUp.args = { Component: SlideOutUp }
-
-export const _SlideOutLeft = Template.bind({})
-_SlideOutLeft.args = { Component: SlideOutLeft }
-
-export const _SlideOutRight = Template.bind({})
-_SlideOutRight.args = { Component: SlideOutRight }
-
 // https://storybook.js.org/docs/react/essentials/controls
 export default {
-  title: 'Animations',
+  title: 'Animations/LowLevel',
   component: Animation,
   argTypes: {
     durationMs: {
