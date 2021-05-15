@@ -1,6 +1,12 @@
 export * from './keyframes'
 export { default as globals } from './globals'
-export { default as animationFactory, AnimationFactoryProps, BaseAnimationProps } from './animation-factory'
+export {
+  default as animationFactory,
+  AnimationFactoryProps,
+  BaseAnimationProps,
+  AnimatedComponentType,
+  ComponentType,
+} from './animation-factory'
 export { default as Animation, AnimationComponentProps } from './components/Animation'
 
 // Fades

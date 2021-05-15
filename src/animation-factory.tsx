@@ -6,8 +6,8 @@ import config from './globals'
 /**
  * Declare valid component types that can be animated.
  */
-type ReactComponentType = keyof JSX.IntrinsicElements | React.FC | React.ComponentType<any>
-export type ComponentType = ReactComponentType | StyledComponent<ReactComponentType, any>
+type ReactComponentType<P = any> = keyof JSX.IntrinsicElements | React.FC<P> | React.ComponentType<P>
+export type ComponentType<P = any> = ReactComponentType<P> | StyledComponent<ReactComponentType<P>, any>
 
 /**
  * Common properties for all animation components.
@@ -27,6 +27,11 @@ export interface BaseAnimationProps extends Record<string, any> {
   parentAnimation?: React.FC<BaseAnimationProps>
   childAnimation?: React.FC<BaseAnimationProps>
 }
+
+type AnimatedReactComponentType<P extends BaseAnimationProps> = React.FC<P> | React.ComponentType<P>
+export type AnimatedComponentType<P extends BaseAnimationProps> =
+  | AnimatedReactComponentType<P>
+  | StyledComponent<AnimatedReactComponentType<P>, any>
 
 /**
  * Arguments to animationFactory function.
