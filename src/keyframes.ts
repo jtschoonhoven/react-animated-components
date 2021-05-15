@@ -1,15 +1,5 @@
 import { keyframes } from 'styled-components'
 
-export const show = keyframes`
-  from { visibility: hidden; }
-  to { visibility: visible; }
-`
-
-export const hide = keyframes`
-  from { visibility: visible; }
-  to { visibility: hidden; }
-`
-
 export const fadeIn = keyframes`
   from { opacity: 0; }
   to { opacity: 1; }

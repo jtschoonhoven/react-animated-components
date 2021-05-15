@@ -14,6 +14,7 @@ export { default as RotateCw } from './components/rotate/RotateCw'
 export { default as RotateCcw } from './components/rotate/RotateCcw'
 
 // Slides
+export { default as Slide } from './components/slide/Slide'
 export { default as SlideInDown } from './components/slide/SlideInDown'
 export { default as SlideInUp } from './components/slide/SlideInUp'
 export { default as SlideInLeft } from './components/slide/SlideInLeft'
