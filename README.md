@@ -111,7 +111,7 @@ Animated components all accept the following **optional** properties.
 
 ### `display`
 
-**[`"inherit" | "inline-block" | "block"`]:** A shorthand to set the CSS "display" property. **Do not use "inline"** this cannot be animated. Any valid CSS display property is valid, but in practice you should use either "inherit" (the default), "inline-block" or "block".
+**[`"inherit" | "inline-block" | "block"`]:** A shorthand to set the CSS "display" property. **Do not use "inline"** this cannot be animated. Any valid CSS display property is valid, but in practice you should use either "inline-block" (the default) or "block".
 
 ### `onComplete`
 
