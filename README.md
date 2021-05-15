@@ -16,7 +16,7 @@ npm install --save react-animated-components
 
 ## Use
 
-```tsx
+```jsx
 import { Rotate } from 'react-animated-components'
 
 /** Pie is boring... let's animate it! **/
@@ -32,17 +32,19 @@ const RotatingPie = () => {
 }
 ```
 
+_Scroll down for more examples!_
+
 ## Demo
 
 [jtschoonhoven.github.io/react-animated-components](https://jtschoonhoven.github.io/react-animated-components)
 
-## Component API
+## High-Level Component API
 
 ### `<Rotate>`
 
 **Props:**
 
-- `ccw` [boolean]: If true, rotates counter-clockwise (default false)
+- `ccw` [`boolean`]: If true, rotates counter-clockwise (default false)
 
 **Sub-components:**
 
@@ -53,7 +55,7 @@ const RotatingPie = () => {
 
 **Props:**
 
-- `out` [boolean]: If true, fades out and exits the DOM (default false)
+- `out` [`boolean`]: If true, fades out and exits the DOM (default false)
 
 **Sub-components:**
 
@@ -64,11 +66,13 @@ const RotatingPie = () => {
 
 **Props:**
 
-- `up` [boolean]: Slide up
-- `down` [boolean]: Slide down
-- `left` [boolean]: Slide left
-- `right` [boolean]: Slide right
-- `out` [boolean]: If true, slides out and exits the DOM (default false)
+- `out` [`boolean`]: If true, slides out and exits the DOM (default false)
+- `fade` [`boolean`]: If true, adds a fade animation
+- `up` [`boolean`]: Slide up
+- `down` [`boolean`]: Slide down
+- `left` [`boolean`]: Slide left
+- `right` [`boolean`]: Slide right
+- `direction` [`"up" | "down" | "left" | "right"`]: Slide direction, an alternative to boolean direction props
 
 **Sub-components:**
 
@@ -85,34 +89,119 @@ const RotatingPie = () => {
 
 Animated components all accept the following **optional** properties.
 
-### active
+### `active`
 
-**[boolean]** Controls when the animation begins. _Except for exit animations_, this defaults to true and animations begin automatically on mount. Exit animations do not run until `active` is set explicitly.
+**[`boolean`]:** Controls when the animation begins. _Except for exit animations_, this defaults to true and animations begin automatically on mount. Exit animations do not run until `active` is set explicitly.
 
-### delayMs
+### `delayMs`
 
-**[number]** Delays the animation start by the given number of milliseconds.
+**[`number`]:** Delays the animation start by the given number of milliseconds.
 
-### durationMs
+### `durationMs`
 
-**[number]** The total duration (in milliseconds) of one iteration of the animation.
+**[`number`]:** The total duration (in milliseconds) of one iteration of the animation.
 
-### timingFunc
+### `timingFunc`
 
-**[string]** Defines how animations progress through each cycle. Accepts any valid value of the [`animation-timing-function`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function) CSS property.
+**[`string`]:** Defines how animations progress through each cycle. Accepts any valid value of the [`animation-timing-function`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function) CSS property.
 
-### iterations
+### `iterations`
 
-**[number | "infinite"]** The number of times to loop the animation, or "infinite".
+**[`number | "infinite"`]:** The number of times to loop the animation, or "infinite".
 
-### onComplete
+### `display`
 
-**[() => void]** Callback function, called when animation is complete. Useful for garbage collecting components that have exited, or for composing complex chains of effects.
+**[`"inherit" | "inline-block" | "block"`]:** A shorthand to set the CSS "display" property. **Do not use "inline"** this cannot be animated. Any valid CSS display property is valid, but in practice you should use either "inherit" (the default), "inline-block" or "block".
 
-### onActive
+### `onComplete`
 
-**[() => void]** Callback function, called when animation begins. Useful for chaining delayed animations.
+**[`() => void`]:** Callback function, called when animation is complete. Useful for garbage collecting components that have exited, or for composing complex chains of effects.
 
-### display
+### `onActive`
 
-**["inherit" | "inline-block" | "block"]** A shorthand to set the CSS "display" property. **Do not use "inline"** this cannot be animated. Any valid CSS display property is valid, but in practice you should use either "inherit" (the default), "inline-block" or "block".
+**[`() => void`]:** Callback function, called when animation begins. Useful for chaining delayed animations.
+
+### `childAnimation`
+
+**[`React.FC<BaseAnimationProps>`]:** Wrap another animated component inside the current animation. Both animations will receive the same props. This can be a nice way to reduce boilerplate when combining animations with identical props.
+
+### `parentAnimation`
+
+**[`React.FC<BaseAnimationProps>`]:** Same as the `childAnimation` prop, but the current component becomes the child of the new parent.
+
+## Examples
+
+### Composing Combined Effects
+
+```jsx
+import { Rotate } from 'react-animated-components'
+import { FadeIn } from 'react-animated-components'
+
+// Create a composite effect that fades in a rotating pie
+const ComposedFadeInAndRotate = () => {
+  return (
+    <FadeIn>
+      <Rotate>🥧</Rotate>
+    </FadeIn>
+  )
+}
+
+// ...or with `childAnimation` prop
+const FadeInAndRotateChildAnimation = ({ children }) => {
+  return <FadeIn childAnimation={Rotate}>🥧</FadeIn>
+}
+```
+
+### Timed Transitions
+
+```jsx
+import { SlideInDown } from 'react-animated-components'
+import { FadeOut } from 'react-animated-components'
+
+// Slide in a pie from above, then fade out after 3 seconds
+const SlideInAndFadeout = () => {
+  return (
+    <FadeOut delayMs={3000}>
+      <SlideInDown durationMs={500}>🥧</SlideInDown>
+    </FadeOut>
+  )
+}
+```
+
+### Chained Transitions
+
+```jsx
+import { SlideInDown } from 'react-animated-components'
+import { FadeOut } from 'react-animated-components'
+
+// Wait for the slide entrance to complete before exiting
+const SlideInAndFadeout = () => {
+  const [didEnter, setDidEnter] = React.useState(false)
+  const onDidEnter = () => setDidEnter(true)
+  return (
+    <FadeOut active={didEnter}>
+      <SlideInDown onComplete={onDidEnter}>🥧</SlideInDown>
+    </FadeOut>
+  )
+}
+```
+
+### Custom Animations
+
+```jsx
+import { keyframes } from 'styled-components'
+import { animationFactory } from 'react-animated-components'
+
+const myKeyframes = keyframes`
+  from { transform: rotate(359deg); }
+  to { transform: rotate(0deg); }
+`
+
+// Use the animationFactory to create a reausable animated component
+const CustomAnimation = animationFactory({ keyframes: myKeyframes })
+
+// Use custom animations just like any other animated component
+const UseCustomAnimation = () => {
+  return <CustomAnimation durationMs={500}>🥧</CustomAnimation>
+}
+```

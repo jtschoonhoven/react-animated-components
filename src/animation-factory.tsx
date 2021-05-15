@@ -1,12 +1,13 @@
 import React from 'react'
 import { Property } from 'csstype'
-import styled, { css, Keyframes } from 'styled-components'
+import styled, { css, Keyframes, StyledComponent } from 'styled-components'
 import config from './globals'
 
 /**
  * Declare valid component types that can be animated.
  */
-export type ComponentType = keyof JSX.IntrinsicElements | React.FC | React.ComponentType<any>
+type ReactComponentType = keyof JSX.IntrinsicElements | React.FC | React.ComponentType<any>
+export type ComponentType = ReactComponentType | StyledComponent<ReactComponentType, any>
 
 /**
  * Common properties for all animation components.
@@ -23,6 +24,8 @@ export interface BaseAnimationProps extends Record<string, any> {
   style?: React.CSSProperties
   delayMs?: number
   fillMode?: Property.AnimationFillMode
+  parentAnimation?: React.FC<BaseAnimationProps>
+  childAnimation?: React.FC<BaseAnimationProps>
 }
 
 /**
@@ -71,12 +74,27 @@ const animationFactory = ({
     animation-delay: ${(props: BaseAnimationProps) => props.delayMs || defaultDelayMs}ms;
   `
 
+  // @ts-ignore
   const styledComponent = typeof component === 'string' ? styled[component] : styled(component)
-  const Component = styledComponent`${componentCss}`
+  const DefaultComponent = styledComponent`${componentCss}`
 
   // Configure a function component
   const Animation: React.FC<BaseAnimationProps> = React.forwardRef(
-    ({ active, style, display, onActive, onComplete, exitOnComplete, children, ...props }, ref) => {
+    (
+      {
+        active,
+        style,
+        display,
+        onActive,
+        onComplete,
+        exitOnComplete,
+        parentAnimation,
+        childAnimation,
+        children,
+        ...props
+      },
+      ref,
+    ) => {
       exitOnComplete = exitOnComplete !== undefined ? !!exitOnComplete : !!defaultExitOnComplete
       style = style !== undefined ? { display, ...style } : { display }
 
@@ -87,12 +105,15 @@ const animationFactory = ({
       const [isComplete, setIsComplete] = React.useState(false)
       const [forceRemount, setForceRemount] = React.useState(false)
 
-      // Add a "reset" method to the forwarded ref
+      // Add "reset" and "activate" methods to the forwarded ref
       React.useImperativeHandle(ref, () => ({
         reset() {
           setIsComplete(false)
           setIsActive(false)
           setForceRemount(true)
+        },
+        activate() {
+          setIsActive(true)
         },
       }))
 
@@ -142,6 +163,38 @@ const animationFactory = ({
           timeoutId && clearTimeout(timeoutId)
         }
       }, [isActive, props.delayMs])
+
+      let Component = DefaultComponent
+
+      // Insert a child animation if one is defined
+      if (childAnimation) {
+        Component = React.useMemo(() => {
+          const _Component = Component
+          const ChildAnimation = childAnimation
+          return () => (
+            <_Component {...props} style={style}>
+              <ChildAnimation {...props} style={style}>
+                {children}
+              </ChildAnimation>
+            </_Component>
+          )
+        }, [props, style])
+      }
+
+      // Wrap with a parent animation if one is defined
+      if (parentAnimation) {
+        Component = React.useMemo(() => {
+          const _Component = Component
+          const ParentAnimation = parentAnimation
+          return () => (
+            <ParentAnimation {...props} style={style} ref={ref}>
+              <_Component {...props} style={style}>
+                {children}
+              </_Component>
+            </ParentAnimation>
+          )
+        }, [props, style])
+      }
 
       // Force the Component to rerender if forceRemount is true
       if (forceRemount) {

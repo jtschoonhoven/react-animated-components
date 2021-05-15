@@ -62,6 +62,9 @@ export default {
       type: 'text',
       options: ['inline-block', 'block'],
     },
+    direction: {
+      options: ['up', 'down', 'left', 'right'],
+    },
     style: {
       type: 'object',
     },
