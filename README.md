@@ -87,48 +87,32 @@ Animated components all accept the following **optional** properties.
 
 ### active
 
-**[boolean]**
-
-Controls when the animation begins. _Except for exit animations_, this defaults to true and animations begin automatically on mount. Exit animations do not run until `active` is set explicitly.
+**[boolean]** Controls when the animation begins. _Except for exit animations_, this defaults to true and animations begin automatically on mount. Exit animations do not run until `active` is set explicitly.
 
 ### delayMs
 
-**[number]**
-
-Delays the animation start by the given number of milliseconds.
+**[number]** Delays the animation start by the given number of milliseconds.
 
 ### durationMs
 
-**[number]**
-
-The total duration (in milliseconds) of one iteration of the animation.
+**[number]** The total duration (in milliseconds) of one iteration of the animation.
 
 ### timingFunc
 
-**[string]**
-
-Defines how animations progress through each cycle. Accepts any valid value of the [`animation-timing-function`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function) CSS property.
+**[string]** Defines how animations progress through each cycle. Accepts any valid value of the [`animation-timing-function`](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function) CSS property.
 
 ### iterations
 
-**[number | "infinite"]**
-
-The number of times to loop the animation, or "infinite".
+**[number | "infinite"]** The number of times to loop the animation, or "infinite".
 
 ### onComplete
 
-**[() => void]**
-
-Callback function, called when animation is complete. Useful for garbage collecting components that have exited, or for composing complex chains of effects.
+**[() => void]** Callback function, called when animation is complete. Useful for garbage collecting components that have exited, or for composing complex chains of effects.
 
 ### onActive
 
-**[() => void]**
-
-Callback function, called when animation begins. Useful for chaining delayed animations.
+**[() => void]** Callback function, called when animation begins. Useful for chaining delayed animations.
 
 ### display
 
-**["inline-block" | "block"]**
-
-A shorthand to set the CSS "display" property. **Do not use "inline"** this cannot be animated. Any valid CSS display property is valid, but in practice you should use either "inline-block" (the default) or "block".
+**["inherit" | "inline-block" | "block"]** A shorthand to set the CSS "display" property. **Do not use "inline"** this cannot be animated. Any valid CSS display property is valid, but in practice you should use either "inherit" (the default), "inline-block" or "block".
