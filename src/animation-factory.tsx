@@ -20,12 +20,12 @@ export interface BaseAnimationProps extends Record<string, any> {
   onActive?: () => void
   exitOnComplete?: boolean
   active?: boolean
-  display?: Property.Display
   style?: React.CSSProperties
   delayMs?: number
   fillMode?: Property.AnimationFillMode
   parentAnimation?: React.FC<BaseAnimationProps>
   childAnimation?: React.FC<BaseAnimationProps>
+  inline?: boolean
 }
 
 type AnimatedReactComponentType<P extends BaseAnimationProps> = React.FC<P> | React.ComponentType<P>
@@ -89,20 +89,26 @@ const animationFactory = ({
       {
         active,
         style,
-        display,
         onActive,
         onComplete,
         exitOnComplete,
         parentAnimation,
         childAnimation,
+        inline,
         children,
         ...props
       },
       ref,
     ) => {
       exitOnComplete = exitOnComplete !== undefined ? !!exitOnComplete : !!defaultExitOnComplete
-      style = style !== undefined ? { display, ...style } : { display }
+      style = style || {}
 
+      console.log({ inline })
+      if (inline) {
+        style.display = 'inline-block'
+      }
+
+      // Initialize state and constants
       const isActiveInitialState = active !== undefined ? !!active : !!defaultActive || props.delayMs === 0
       const durationMs = props.durationMs || defaultDurationMs
       const iterations = props.iterations || defaultIterations
@@ -176,14 +182,12 @@ const animationFactory = ({
         Component = React.useMemo(() => {
           const _Component = Component
           const ChildAnimation = childAnimation
-          return () => (
-            <_Component {...props} style={style}>
-              <ChildAnimation {...props} style={style}>
-                {children}
-              </ChildAnimation>
+          return (props: BaseAnimationProps) => (
+            <_Component {...props}>
+              <ChildAnimation {...props}>{children}</ChildAnimation>
             </_Component>
           )
-        }, [props, style])
+        }, [])
       }
 
       // Wrap with a parent animation if one is defined
@@ -191,14 +195,12 @@ const animationFactory = ({
         Component = React.useMemo(() => {
           const _Component = Component
           const ParentAnimation = parentAnimation
-          return () => (
-            <ParentAnimation {...props} style={style} ref={ref}>
-              <_Component {...props} style={style}>
-                {children}
-              </_Component>
+          return (props: BaseAnimationProps) => (
+            <ParentAnimation {...props}>
+              <_Component {...props}>{children}</_Component>
             </ParentAnimation>
           )
-        }, [props, style])
+        }, [])
       }
 
       // Force the Component to rerender if forceRemount is true
@@ -210,6 +212,7 @@ const animationFactory = ({
         return <></>
       }
       // Else render the animated component
+      console.log(style)
       return (
         <Component {...props} style={style}>
           {children}

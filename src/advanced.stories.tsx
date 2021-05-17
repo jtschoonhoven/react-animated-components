@@ -27,7 +27,7 @@ ParentAndChildProps.args = {
           </button>
         </div>
         <Rotate parentAnimation={FadeIn} childAnimation={SlideInDown} ref={ref}>
-          <h1>💅</h1>
+          <h1 style={{ textAlign: 'center', fontSize: '9rem' }}>💅</h1>
         </Rotate>
       </>
     )

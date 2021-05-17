@@ -16,7 +16,7 @@ const Template: Story = ({ ...args }) => {
         </button>
       </div>
       <Rotate {...args} ref={ref}>
-        <h1>💅</h1>
+        <h1 style={{ textAlign: 'center', fontSize: '9rem' }}>💅</h1>
       </Rotate>
     </>
   )
@@ -29,45 +29,4 @@ _Rotate.args = {}
 export default {
   title: 'Animations/Rotate',
   component: Rotate,
-  argTypes: {
-    durationMs: {
-      type: 'number',
-    },
-    timingFunc: {
-      type: 'text',
-    },
-    iterations: {
-      type: 'text',
-    },
-    exitOnComplete: {
-      table: {
-        disable: true,
-      },
-    },
-    onComplete: {
-      table: {
-        disable: true,
-      },
-    },
-    onActive: {
-      table: {
-        disable: true,
-      },
-    },
-    active: {
-      type: 'boolean',
-      defaultValue: true,
-    },
-    display: {
-      type: 'text',
-      options: ['inline-block', 'block'],
-    },
-    style: {
-      type: 'object',
-    },
-    delayMs: {
-      type: 'number',
-      defaultValue: 250,
-    },
-  },
 } as Meta

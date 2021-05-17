@@ -16,7 +16,7 @@ const Template: Story = ({ ...args }) => {
         </button>
       </div>
       <Slide {...args} ref={ref}>
-        <h1>💅</h1>
+        <h1 style={{ textAlign: 'center', fontSize: '9rem' }}>💅</h1>
       </Slide>
     </>
   )
@@ -29,48 +29,4 @@ _Slide.args = {}
 export default {
   title: 'Animations/Slide',
   component: Slide,
-  argTypes: {
-    durationMs: {
-      type: 'number',
-    },
-    timingFunc: {
-      type: 'text',
-    },
-    iterations: {
-      type: 'text',
-    },
-    exitOnComplete: {
-      table: {
-        disable: true,
-      },
-    },
-    onComplete: {
-      table: {
-        disable: true,
-      },
-    },
-    onActive: {
-      table: {
-        disable: true,
-      },
-    },
-    active: {
-      type: 'boolean',
-      defaultValue: true,
-    },
-    display: {
-      type: 'text',
-      options: ['inline-block', 'block'],
-    },
-    direction: {
-      options: ['up', 'down', 'left', 'right'],
-    },
-    style: {
-      type: 'object',
-    },
-    delayMs: {
-      type: 'number',
-      defaultValue: 250,
-    },
-  },
 } as Meta

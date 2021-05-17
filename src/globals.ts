@@ -21,9 +21,7 @@ const config = {
     infinite: 'infinite',
   },
   components: {
-    default: styled.div`
-      display: inline-block;
-    `,
+    default: styled.div``,
   },
 } as const
 

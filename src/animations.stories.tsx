@@ -33,8 +33,8 @@ const Template: Story = ({ Component, ...args }) => {
           Reset
         </button>
       </div>
-      <Component {...args} ref={ref}>
-        <h1>💅</h1>
+      <Component ref={ref} {...args}>
+        <h1 style={{ fontSize: '9rem', textAlign: 'center' }}>💅</h1>
       </Component>
     </>
   )
@@ -84,8 +84,15 @@ export default {
   title: 'Animations/LowLevel',
   component: Animation,
   argTypes: {
+    inline: {
+      type: 'boolean',
+    },
     durationMs: {
       type: 'number',
+    },
+    delayMs: {
+      type: 'number',
+      defaultValue: 0,
     },
     timingFunc: {
       type: 'text',
@@ -100,16 +107,8 @@ export default {
       type: 'boolean',
       defaultValue: true,
     },
-    display: {
-      type: 'text',
-      options: ['inline-block', 'block'],
-    },
     style: {
       type: 'object',
-    },
-    delayMs: {
-      type: 'number',
-      defaultValue: 250,
     },
     Component: {
       table: {
@@ -127,6 +126,11 @@ export default {
       },
     },
     onComplete: {
+      table: {
+        disable: true,
+      },
+    },
+    onActive: {
       table: {
         disable: true,
       },
