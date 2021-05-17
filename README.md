@@ -109,17 +109,17 @@ Animated components all accept the following **optional** properties.
 
 **[`number | "infinite"`]:** The number of times to loop the animation, or "infinite".
 
-### `display`
+### `inline`
 
-**[`"inherit" | "inline-block" | "block"`]:** A shorthand to set the CSS "display" property. **Do not use "inline"** this cannot be animated. Any valid CSS display property is valid, but in practice you should use either "inline-block" (the default) or "block".
-
-### `onComplete`
-
-**[`() => void`]:** Callback function, called when animation is complete. Useful for garbage collecting components that have exited, or for composing complex chains of effects.
+**[`boolean`]:** Toggle the display mode from `display:block` (the default) to `display:inline-block`. Inline may be more appropriate for animating icons, or for anything that appears inside a text block. _NEVER_ override this to `display:inline` as these can't be animated.
 
 ### `onActive`
 
 **[`() => void`]:** Callback function, called when animation begins. Useful for chaining delayed animations.
+
+### `onComplete`
+
+**[`() => void`]:** Callback function, called when animation is complete. Useful for garbage collecting components that have exited, or for composing complex chains of effects.
 
 ### `childAnimation`
 
