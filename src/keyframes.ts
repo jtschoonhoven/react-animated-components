@@ -43,7 +43,7 @@ export const slideInUp = keyframes`
 
 export const slideInRight = keyframes`
   from {
-    transform: translate3d(100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
     visibility: visible;
   }
 
@@ -54,7 +54,7 @@ export const slideInRight = keyframes`
 
 export const slideInLeft = keyframes`
   from {
-    transform: translate3d(-100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
     visibility: visible;
   }
 
