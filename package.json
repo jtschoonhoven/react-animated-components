@@ -1,7 +1,7 @@
 {
   "name": "react-animated-components",
   "private": false,
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Easy-as-pie CSS animations for React",
   "main": "dist/index.js",
   "license": "MIT",
