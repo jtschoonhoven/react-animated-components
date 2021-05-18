@@ -42,7 +42,9 @@ _Scroll down for more examples!_
 
 ### `<Rotate>`
 
-Spin child elements around their midpoint. Note that the actual midpoint of an element may not be visually obvious: if it's making your element travel in a crazy circle, consider ajusting your element's width, or set the `inline` property.
+Spin child elements around their midpoint.
+
+Note that the actual midpoint of an element may not be visually obvious: if it's making your element travel in a crazy circle, consider ajusting your element's width, or set the `inline` property.
 
 **Props:**
 
@@ -55,7 +57,9 @@ Spin child elements around their midpoint. Note that the actual midpoint of an e
 
 ### `<Fade>`
 
-Animates the opacity of child elements. This will not cause adjacent elements to reflow except when the element first enters or exits the DOM.
+Animates the opacity of child elements.
+
+This will not cause adjacent elements to reflow except when the element first enters or exits the DOM.
 
 **Props:**
 
@@ -68,7 +72,9 @@ Animates the opacity of child elements. This will not cause adjacent elements to
 
 ### `<Slide>`
 
-Animates the location of child elements so that they enter or exit from the given direction. This will not cause adjacent elements to reflow except when the element first enters or exits the DOM.
+Animates the location of child elements so that they enter or exit from the given direction.
+
+This will not cause adjacent elements to reflow except when the element first enters or exits the DOM.
 
 **Props:**
 
@@ -93,7 +99,9 @@ Animates the location of child elements so that they enter or exit from the give
 
 ### `<Wipe>`
 
-Animates the width or height of an element for accordion-style effects. Animating width/height causes adjacent elements to reflow on each tick. This can be useful, but your browser will hate it. Consider the tradeoffs and use your own judgement. This animation is provided as a best-effort as there is currently no way to implement expand/collapse animations that will work for all use cases.
+Animates the width or height of an element for accordion-style effects.
+
+Animating width/height causes adjacent elements to reflow on each tick. This can be useful, but your browser will hate it. Consider the tradeoffs and use your own judgement. This animation is provided as a best-effort as there is currently no way to implement expand/collapse animations that will work for all use cases.
 
 **Props:**
 

@@ -128,12 +128,19 @@ const animationFactory = ({
       // Pass element dimensions to keyframes function (if using a keyframe function)
       React.useEffect(() => {
         if (typeof keyframes === 'function') {
-          if (childRef.current) {
-            const domRect = childRef.current.getBoundingClientRect()
-            const computedStyle = getComputedStyle(childRef.current)
-            // TODO: find a more consistently accurate way to get the margin
-            const widthPx = domRect.width + parseInt(computedStyle.marginLeft) + parseInt(computedStyle.marginRight)
-            const heightPx = domRect.height + parseInt(computedStyle.marginTop) + parseInt(computedStyle.marginBottom)
+          if (childRef.current && childRef.current) {
+            const el = childRef.current.firstElementChild || childRef.current
+
+            const domRect = el.getBoundingClientRect()
+            const computed = getComputedStyle(el)
+
+            const { marginRight, marginBottom, marginLeft } = computed
+            const margins = [marginRight, marginBottom, marginLeft]
+            const [mr, mb, ml] = margins.map((m): number => parseFloat(m.replace('px', '')))
+            const widthPx = domRect.width + mb + ml
+            const heightPx = domRect.height + mb
+
+            console.log({ widthPx, heightPx, domRect, mr, mb })
             setKeyframeProps({ widthPx, heightPx })
           }
         }
