@@ -1,6 +1,6 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react'
-import Slide from './Slide'
+import Wipe from './Wipe'
 
 const Template: Story = ({ ...args }) => {
   const ref = React.useRef(null)
@@ -15,18 +15,18 @@ const Template: Story = ({ ...args }) => {
           Reset
         </button>
       </div>
-      <Slide {...args} ref={ref}>
+      <Wipe {...args} ref={ref}>
         <div style={{ fontSize: '9rem', width: '180px' }}>💅</div>
-      </Slide>
+      </Wipe>
     </>
   )
 }
 
-export const _Slide = Template.bind({})
-_Slide.args = {}
+export const _Wipe = Template.bind({})
+_Wipe.args = {}
 
 // https://storybook.js.org/docs/react/essentials/controls
 export default {
-  title: 'Animations/Slide',
-  component: Slide,
+  title: 'Animations/Wipe',
+  component: Wipe,
 } as Meta

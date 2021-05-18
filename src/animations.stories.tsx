@@ -20,6 +20,12 @@ import SlideOutUp from './components/slide/SlideOutUp'
 import SlideOutLeft from './components/slide/SlideOutLeft'
 import SlideOutRight from './components/slide/SlideOutRight'
 
+// Wipes
+import WipeOutY from './components/wipe/WipeOutY'
+import WipeOutX from './components/wipe/WipeOutX'
+import WipeInY from './components/wipe/WipeInY'
+import WipeInX from './components/wipe/WipeInX'
+
 const Template: Story = ({ Component, ...args }) => {
   const ref = React.useRef(null)
   return (
@@ -34,7 +40,7 @@ const Template: Story = ({ Component, ...args }) => {
         </button>
       </div>
       <Component ref={ref} {...args}>
-        <h1 style={{ fontSize: '9rem', textAlign: 'center' }}>💅</h1>
+        <div style={{ fontSize: '9rem', width: '180px' }}>💅</div>
       </Component>
     </>
   )
@@ -54,7 +60,7 @@ _FadeIn.args = { Component: FadeIn }
 export const _FadeOut = Template.bind({})
 _FadeOut.args = { Component: FadeOut }
 
-// Slide
+// Slides
 export const _SlideOutDown = Template.bind({})
 _SlideOutDown.args = { Component: SlideOutDown }
 
@@ -78,6 +84,19 @@ _SlideInLeft.args = { Component: SlideInLeft }
 
 export const _SlideInRight = Template.bind({})
 _SlideInRight.args = { Component: SlideInRight }
+
+// Wipes
+export const _WipeOutY = Template.bind({})
+_WipeOutY.args = { Component: WipeOutY }
+
+export const _WipeOutX = Template.bind({})
+_WipeOutX.args = { Component: WipeOutX }
+
+export const _WipeInY = Template.bind({})
+_WipeInY.args = { Component: WipeInY }
+
+export const _WipeInX = Template.bind({})
+_WipeInX.args = { Component: WipeInX }
 
 // https://storybook.js.org/docs/react/essentials/controls
 export default {

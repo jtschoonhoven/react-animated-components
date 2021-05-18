@@ -16,7 +16,7 @@ const Template: Story = ({ ...args }) => {
         </button>
       </div>
       <Rotate {...args} ref={ref}>
-        <h1 style={{ textAlign: 'center', fontSize: '9rem' }}>💅</h1>
+        <div style={{ fontSize: '9rem', width: '180px' }}>💅</div>
       </Rotate>
     </>
   )

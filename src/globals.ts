@@ -21,7 +21,10 @@ const config = {
     infinite: 'infinite',
   },
   components: {
-    default: styled.div``,
+    default: styled.div`
+      overflow: clip;
+      box-sizing: border-box;
+    `,
   },
 } as const
 

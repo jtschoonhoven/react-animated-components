@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/react'
 import Rotate from './components/rotate/Rotate'
 import FadeIn from './components/fade/FadeIn'
 import SlideInDown from './components/slide/SlideInDown'
-import FadeOut from './components/fade/FadeOut'
+import Wipe from './components/wipe/Wipe'
 
 export default { title: 'Animations/Advanced' } as Meta
 
@@ -26,8 +26,8 @@ ParentAndChildProps.args = {
             Reset
           </button>
         </div>
-        <Rotate parentAnimation={FadeIn} childAnimation={SlideInDown} ref={ref}>
-          <h1 style={{ textAlign: 'center', fontSize: '9rem' }}>💅</h1>
+        <Rotate parentAnimation={FadeIn} childAnimation={SlideInDown} ref={ref} inline>
+          <div style={{ fontSize: '9rem', width: '180px' }}>💅</div>
         </Rotate>
       </>
     )
@@ -50,17 +50,19 @@ AutoVanishingAlerts.args = {
 
     const Items = items.map((item) => {
       return (
-        <FadeOut
-          active
-          key={item}
-          durationMs={1500}
-          onComplete={() => {
-            deleteItem(item)
-          }}
-          display="block"
-        >
-          <p>Alert!</p>
-        </FadeOut>
+        <SlideInDown key={item}>
+          <Wipe
+            out
+            durationMs={500}
+            delayMs={3000}
+            onComplete={() => {
+              deleteItem(item)
+            }}
+            exitOnComplete={false}
+          >
+            <p style={{ margin: 0, padding: 10 }}>Alert!</p>
+          </Wipe>
+        </SlideInDown>
       )
     })
 

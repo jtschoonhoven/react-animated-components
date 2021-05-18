@@ -34,10 +34,18 @@ export type AnimatedComponentType<P extends BaseAnimationProps> =
   | StyledComponent<AnimatedReactComponentType<P>, any>
 
 /**
+ * Properties passed to the keyframe function (if using a keyframe function)
+ */
+export interface KeyframeProps extends BaseAnimationProps {
+  widthPx: number
+  heightPx: number
+}
+
+/**
  * Arguments to animationFactory function.
  */
 export interface AnimationFactoryProps {
-  keyframes: Keyframes
+  keyframes: Keyframes | ((props: KeyframeProps) => Keyframes)
   component?: ComponentType
   defaultDurationMs?: number
   defaultTimingFunc?: Property.AnimationTimingFunction
@@ -71,12 +79,12 @@ const animationFactory = ({
   defaultDelayMs = defaultDelayMs || 0
 
   const componentCss = css`
-    animation-name: ${keyframes};
-    animation-duration: ${(props: BaseAnimationProps) => props.durationMs || defaultDurationMs}ms;
-    animation-timing-function: ${(props: BaseAnimationProps) => props.timingFunc || defaultTimingFunc};
-    animation-iteration-count: ${(props: BaseAnimationProps) => props.iterations || defaultIterations};
-    animation-fill-mode: ${(props: BaseAnimationProps) => props.fillMode || defaultFillMode};
-    animation-delay: ${(props: BaseAnimationProps) => props.delayMs || defaultDelayMs}ms;
+    animation-name: ${(props: KeyframeProps) => (typeof keyframes === 'function' ? keyframes(props) : keyframes)};
+    animation-duration: ${(props: KeyframeProps) => props.durationMs || defaultDurationMs}ms;
+    animation-timing-function: ${(props: KeyframeProps) => props.timingFunc || defaultTimingFunc};
+    animation-iteration-count: ${(props: KeyframeProps) => props.iterations || defaultIterations};
+    animation-fill-mode: ${(props: KeyframeProps) => props.fillMode || defaultFillMode};
+    animation-delay: ${(props: KeyframeProps) => props.delayMs || defaultDelayMs}ms;
   `
 
   // @ts-ignore
@@ -100,21 +108,36 @@ const animationFactory = ({
       },
       ref,
     ) => {
-      exitOnComplete = exitOnComplete !== undefined ? !!exitOnComplete : !!defaultExitOnComplete
-      style = style || {}
-
-      console.log({ inline })
-      if (inline) {
-        style.display = 'inline-block'
-      }
-
       // Initialize state and constants
+      exitOnComplete = exitOnComplete !== undefined ? !!exitOnComplete : !!defaultExitOnComplete
       const isActiveInitialState = active !== undefined ? !!active : !!defaultActive || props.delayMs === 0
       const durationMs = props.durationMs || defaultDurationMs
       const iterations = props.iterations || defaultIterations
       const [isActive, setIsActive] = React.useState(isActiveInitialState)
       const [isComplete, setIsComplete] = React.useState(false)
       const [forceRemount, setForceRemount] = React.useState(false)
+      const [keyframeProps, setKeyframeProps] = React.useState<KeyframeProps | undefined>()
+      const childRef = React.useRef<HTMLDivElement>(null)
+
+      // Set style from `inline` prop if exists
+      style = style || {}
+      if (inline) {
+        style.display = 'inline-block'
+      }
+
+      // Pass element dimensions to keyframes function (if using a keyframe function)
+      React.useEffect(() => {
+        if (typeof keyframes === 'function') {
+          if (childRef.current) {
+            const domRect = childRef.current.getBoundingClientRect()
+            const computedStyle = getComputedStyle(childRef.current)
+            // TODO: find a more consistently accurate way to get the margin
+            const widthPx = domRect.width + parseInt(computedStyle.marginLeft) + parseInt(computedStyle.marginRight)
+            const heightPx = domRect.height + parseInt(computedStyle.marginTop) + parseInt(computedStyle.marginBottom)
+            setKeyframeProps({ widthPx, heightPx })
+          }
+        }
+      }, [keyframes, childRef.current])
 
       // Add "reset" and "activate" methods to the forwarded ref
       React.useImperativeHandle(ref, () => ({
@@ -212,9 +235,8 @@ const animationFactory = ({
         return <></>
       }
       // Else render the animated component
-      console.log(style)
       return (
-        <Component {...props} style={style}>
+        <Component {...props} {...keyframeProps} style={style} ref={childRef}>
           {children}
         </Component>
       )
