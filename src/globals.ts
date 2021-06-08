@@ -15,6 +15,7 @@ const config = {
   fillModes: {
     default: 'none',
     exitAnimationDefault: 'forwards',
+    enterAnimationDefault: 'backwards',
   },
   iterations: {
     once: 1,
